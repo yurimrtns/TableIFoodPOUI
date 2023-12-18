@@ -1,0 +1,12 @@
+<app-modal
+  (dadosSelecionados)="onSalvar($event)"
+  (dadosEditados)="onEditar($event)"
+></app-modal>
+<po-table
+  #tabela
+  [p-columns]="columns"
+  [p-items]="itens"
+  [p-actions]="acoes"
+  p-actions-right
+>
+</po-table>

@@ -1,0 +1,68 @@
+<po-modal #modal p-title="Exportações IFood">
+  <form>
+    <!-- validar por aqui  -->
+    <div class="po-row">
+      <po-select
+        class="po-md-10"
+        name="empresa"
+        p-label="Empresa"
+        [p-options]="empresas"
+        [(ngModel)]="dados.empresasAtivo"
+        required="true"
+      >
+      </po-select>
+
+      <po-checkbox
+        class="po-mt-5 po-ml-4"
+        name="checkbox"
+        [(ngModel)]="dados.checkbox"
+        p-label="Ativo"
+      >
+      </po-checkbox>
+    </div>
+
+    <po-select
+      p-label="Segmento"
+      name="segmentos"
+      class="po-md-12"
+      [p-options]="segmentos"
+      [(ngModel)]="dados.segmentosAtivo"
+      required="true"
+    >
+    </po-select>
+
+    <div class="po-row">
+      <po-input
+        class="po-md-6"
+        name="idLoja"
+        [(ngModel)]="dados.idLoja"
+        p-label="ID Loja"
+      >
+      </po-input>
+
+      <po-select
+        p-label="Categoria"
+        name="categorias"
+        class="po-md-6"
+        [p-options]="categorias"
+        [(ngModel)]="dados.categoriasAtivo"
+        required="true"
+      >
+      </po-select>
+    </div>
+  </form>
+
+  <po-modal-footer>
+    <po-button
+      class="po-mr-4"
+      p-label="Salvar"
+      p-kind="primary"
+      [p-disabled]="isDisabled()"
+      (click)="Salvar()"
+    >
+    </po-button>
+  </po-modal-footer>
+</po-modal>
+
+<po-button p-label="Adionar Empesa/Segmento" (p-click)="modal.open()">
+</po-button>
