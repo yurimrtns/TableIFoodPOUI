@@ -30,6 +30,9 @@ export class ModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.service.GetEmpresas().subscribe(res => {
+      this.empresas = res.items;
+    });
     this.empresas = this.service.getEmpresas();
     this.segmentos = this.service.getSegmentos();
     this.categorias = this.service.getCategorias();

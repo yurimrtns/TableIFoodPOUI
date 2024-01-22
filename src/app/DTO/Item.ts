@@ -1,4 +1,5 @@
 export class Item {
+  id: number;
   idLoja: number;
   empresasAtivo: string = '';
   checkbox: string;

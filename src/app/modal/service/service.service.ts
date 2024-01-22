@@ -1,13 +1,34 @@
-import { HttpClient } from '@angular/common/http';
+import { getLocaleId } from '@angular/common';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PoSelectOption } from '@po-ui/ng-components';
+import { Observable } from 'rxjs';
 import { Item } from 'src/app/DTO/Item';
+import { Empresas } from 'src/app/DTO/Empresas';
+import { PoResponseApi } from '@po-ui/ng-components';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type' : 'application/json'
+  })
+};
 
 @Injectable({
   providedIn: 'root',
 })
 export class ServiceService {
 
+  private readonly API = 'https://localhost:7108/Segmentos';
+
+  constructor(private http: HttpClient) {}
+
+  GetEmpresas(): Observable<PoResponseApi>{
+    return this.http.get<PoResponseApi>(this.API);
+  }
+  
+  GetEmpresaPorId(id: number): Observable<Empresas>{
+    const apiUrl = `${this.API}/${id}`;
+    return this.http.get<Empresas>(apiUrl);
+  }
   empresas: Array<any> = [
     { label: 'empresa 1', value: 'empresa 1' },
     { label: 'empresa 2', value: 'empresa 2' },
