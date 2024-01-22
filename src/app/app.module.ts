@@ -8,6 +8,8 @@ import { ServiceService } from './modal/service/service.service';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from './shared/modules/shared/shared.module';
 import { TableComponent } from './table/table.component';
+import { LoginComponent } from './login/login.component';
+import { AppRoutingModule } from './app.routing';
 
 
 
@@ -16,13 +18,15 @@ import { TableComponent } from './table/table.component';
   declarations: [
     AppComponent,
     ModalComponent,
-    TableComponent
+    TableComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    AppRoutingModule
   ],
   providers: [
     ServiceService,

@@ -1,10 +1,13 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PoSelectOption } from '@po-ui/ng-components';
+import { Item } from 'src/app/DTO/Item';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ServiceService {
+
   empresas: Array<any> = [
     { label: 'empresa 1', value: 'empresa 1' },
     { label: 'empresa 2', value: 'empresa 2' },

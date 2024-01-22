@@ -6,7 +6,6 @@ import {
   PoTableColumnLabel,
   PoTableComponent,
 } from '@po-ui/ng-components';
-import { Item } from '../DTO/Item';
 import { ModalComponent } from '../modal/modal.component';
 
 @Component({
