@@ -5,5 +5,5 @@ export class Item {
   checkbox: string;
   segmentosAtivo: string = '';
   categoriasAtivo: string = '';
-  value: number = 0;
+  // value: number = 0;
 }

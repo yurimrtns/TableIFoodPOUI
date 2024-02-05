@@ -7,7 +7,7 @@
         name="empresa"
         p-label="Empresa"
         [p-options]="empresas"
-        [(ngModel)]="dados.empresasAtivo"
+        [(ngModel)]="dados.idEmpresa"
         required="true"
       >
       </po-select>
@@ -15,8 +15,9 @@
       <po-checkbox
         class="po-mt-5 po-ml-4"
         name="checkbox"
-        [(ngModel)]="dados.checkbox"
+        [(ngModel)]="dados.ativo"
         p-label="Ativo"
+        [p-disabled]="!checkboxOn"
       >
       </po-checkbox>
     </div>
@@ -26,26 +27,26 @@
       name="segmentos"
       class="po-md-12"
       [p-options]="segmentos"
-      [(ngModel)]="dados.segmentosAtivo"
+      [(ngModel)]="dados.idSegmento"
       required="true"
     >
     </po-select>
 
     <div class="po-row">
-      <po-input
+      <po-decimal
         class="po-md-6"
         name="idLoja"
-        [(ngModel)]="dados.idLoja"
+        [(ngModel)]="dados.idLojaIFood"
         p-label="ID Loja"
       >
-      </po-input>
+      </po-decimal>
 
       <po-select
         p-label="Categoria"
         name="categorias"
         class="po-md-6"
         [p-options]="categorias"
-        [(ngModel)]="dados.categoriasAtivo"
+        [(ngModel)]="dados.idCategoria"
         required="true"
       >
       </po-select>
@@ -64,5 +65,5 @@
   </po-modal-footer>
 </po-modal>
 
-<po-button p-label="Adionar Empesa/Segmento" (p-click)="modal.open()">
+<po-button p-label="Adionar Empesa/Segmento" (p-click)="modal.open()" (p-click)="AtivarCheckbox()">
 </po-button>

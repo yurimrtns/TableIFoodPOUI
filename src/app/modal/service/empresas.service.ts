@@ -1,10 +1,9 @@
-import { getLocaleId } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Item } from 'src/app/DTO/Item';
 import { Empresas } from 'src/app/DTO/Empresas';
 import { PoResponseApi } from '@po-ui/ng-components';
+import { EndPoint } from "../EndPoint";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -15,27 +14,35 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root',
 })
-export class ServiceService {
+export class EmpresasService {
 
-  private readonly API = 'https://localhost:7108/Segmentos';
 
-  constructor(private http: HttpClient) {}
+   private readonly API: string = 'https://localhost:7108/';
+    
+     constructor(private http: HttpClient) {}
 
-  GetEmpresas(): Observable<PoResponseApi>{
-    return this.http.get<PoResponseApi>(this.API);
-  }
+     
+     getAll(endPoint: EndPoint): Observable<PoResponseApi>{
+         return this.http.get<PoResponseApi>(this.API + endPoint);
+     }
+
+
+  // GetEmpresas(): Observable<PoResponseApi>{
+  //   return this.http.get<PoResponseApi>(this.API);
+  // }
   
-  GetEmpresaPorId(id: number): Observable<Empresas>{
-    const apiUrl = `${this.API}/${id}`;
-    return this.http.get<Empresas>(apiUrl);
-  }
-  empresas: Array<any> = [
-    { label: 'empresa 1', value: 'empresa 1' },
-    { label: 'empresa 2', value: 'empresa 2' },
-    { label: 'empresa 3', value: 'empresa 3' },
-    { label: 'empresa 4', value: 'empresa 4' },
-    { label: 'empresa 5', value: 'empresa 5' },
-  ];
+   GetEmpresaPorId(id: number): Observable<Empresas>{
+     const apiUrl = `${this.API}/${id}`;
+     return this.http.get<Empresas>(apiUrl);
+   }
+
+  // SalvarEmpresas(empresas: Empresas): Observable<any>{
+  //   return this.http.post<Empresas>(this.API, empresas, httpOptions)
+  // }
+
+  // AtualizarEmpresa(empresa: Empresas): Observable<any>{
+  //   return this.http.put<Empresas>(this.API, empresa, httpOptions)
+  // }
 
   segmentos: Array<any> = [
     { label: 'segmento 1', value: 'segmento 1' },
@@ -51,9 +58,6 @@ export class ServiceService {
     { label: 'categoria 3', value: 'categoria 3' },
   ];
 
-  getEmpresas() {
-    return this.empresas;
-  }
   getSegmentos() {
     return this.segmentos;
   }

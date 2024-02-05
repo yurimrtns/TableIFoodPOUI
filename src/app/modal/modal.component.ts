@@ -6,14 +6,14 @@ import {
   ViewChild,
 } from '@angular/core';
 import { PoModalComponent } from '@po-ui/ng-components';
-import { Item } from '../DTO/Item';
-
-import { ServiceService } from './service/service.service';
+import { Produto } from '../DTO/Produto';
+import { EndPoint } from "./EndPoint";
+import { EmpresasService } from './service/empresas.service';
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
-  providers: [ServiceService],
+  providers: [EmpresasService]
 })
 export class ModalComponent implements OnInit {
   empresas: any[] = [];
@@ -23,25 +23,36 @@ export class ModalComponent implements OnInit {
   @Output() dadosEditados = new EventEmitter();
   @ViewChild('modal') modal: PoModalComponent;
   check = false;
+  checkboxOn = true;
 
-  dados: Item;
-  constructor(private service: ServiceService) {
-    this.dados = new Item();
+  dados: Produto;
+  constructor(private service: EmpresasService) {
+    this.dados = new Produto();
   }
-
+  //Ao iniciar a página as informações do banco de dados são recebidas e mapeadas para o tipo certo
   ngOnInit() {
-    this.service.GetEmpresas().subscribe(res => {
-      this.empresas = res.items;
+    this.service.getAll(EndPoint.Empresas).subscribe(res => {
+      this.empresas = res.items.map(x => {
+        return { label: x.nome, value: x.id };
+      })
     });
-    this.empresas = this.service.getEmpresas();
-    this.segmentos = this.service.getSegmentos();
-    this.categorias = this.service.getCategorias();
+    this.service.getAll(EndPoint.Segmentos).subscribe(res => {
+      this.segmentos = res.items.map(x => {
+        return { label: x.nome, value: x.id };
+      })
+    });
+    this.service.getAll(EndPoint.Categorias).subscribe(res => {
+      this.categorias = res.items.map(x => {
+        return { label: x.nome, value: x.id };
+      })
+    });
   }
 
+  //verifica se os dados inseridos no modal são novos ou não e os envia para a função onSalvar ou onEditar 
   Salvar() {
     if (this.check === false) {
       this.dadosSelecionados.emit(this.dados);
-      this.dados.value++;
+      // this.dados.value++;
     } else {
       this.dadosEditados.emit(this.dados);
       this.check = false;
@@ -49,23 +60,30 @@ export class ModalComponent implements OnInit {
     this.modal.close();
   }
 
+//utilizada para bloquear o botão caso os campos não tenham sido preenchido
   isDisabled() {
     return (
-      this.dados['empresasAtivo'] == '' ||
-      this.dados['idLoja'] == null ||
-      this.dados['segmentosAtivo'] == '' ||
-      this.dados['categoriasAtivo'] == ''
+      this.dados['idEmpresa'] == null ||
+      this.dados['idLojaIFood'] == null ||
+      this.dados['idSegmento'] == null ||
+      this.dados['idCategoria'] == null
     );
   }
 
-  EditarTabela(item) {
-    this.modal.open();
-    this.dados['empresasAtivo'] = item['empresa'];
-    this.dados['segmentosAtivo'] = item['segmento'];
-    this.dados['categoriasAtivo'] = item['categoria'];
-    this.dados['checkbox'] = item['status'];
-    this.dados['idLoja'] = item['id'];
-    this.dados['value'] = item['value'];
+  //recebe o produto a ser editado e insere suas infos no form
+  EditarTabela(produto) {
+    this.checkboxOn = false;
     this.check = true;
+    this.modal.open();
+    this.dados['idEmpresa'] = produto.idEmpresa;
+    this.dados['idSegmento'] = produto.idSegmento;
+    this.dados['idCategoria'] = produto.idCategoria;
+    this.dados['ativo'] = produto.ativo;
+    this.dados['idLojaIFood'] = produto.idLojaIFood;
+    this.dados['id'] = produto.id;
+    
+  }
+  AtivarCheckbox(){
+    this.checkboxOn = true;
   }
 }
